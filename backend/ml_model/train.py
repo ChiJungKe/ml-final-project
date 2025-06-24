@@ -10,7 +10,7 @@ import torch.optim as optim
 import matplotlib.pyplot as plt
 from torchvision.models import vgg19, VGG19_Weights
 
-# ==== EarlyStopping 類別 ====
+# ==== EarlyStopping ====
 class EarlyStopping:
     def __init__(self, patience=10, min_delta=0.1):
         self.patience = patience
@@ -155,8 +155,6 @@ def train(input_dir, label_dir, model_save_path, results_dir, epochs=50, batch_s
     # ==== Data Augmentation  ====
     transform = transforms.Compose([
         transforms.Resize((512,512)),
-        #transforms.RandomHorizontalFlip(),
-        #transforms.ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1, hue=0.05),
         transforms.ToTensor(),
         transforms.Normalize([0.5]*3, [0.5]*3)
     ])
@@ -222,6 +220,7 @@ def train(input_dir, label_dir, model_save_path, results_dir, epochs=50, batch_s
     torch.save(G.state_dict(), model_save_path)
     print(f"模型已存為 {model_save_path}")
 
+    # ==== Loss 曲線繪製 ====
     plt.figure(figsize=(12,8))
     #plt.suptitle("Training Loss Curves of 3D_Cartoon model", fontsize=16)
     plt.suptitle("Training Loss Curves of Comic model", fontsize=16)
@@ -263,6 +262,7 @@ def train(input_dir, label_dir, model_save_path, results_dir, epochs=50, batch_s
     plt.show()
 
 if __name__ == '__main__':
+    #3D_comic Style 訓練 (900 pictures)
     # train(
     #     input_dir=r'C:\Users\USER\Desktop\mlclass\dataset\dataset\3D Rendered Cartoon Style\train\input',
     #     label_dir=r'C:\Users\USER\Desktop\mlclass\dataset\dataset\3D Rendered Cartoon Style\train\label',
@@ -273,7 +273,7 @@ if __name__ == '__main__':
     #     device='cuda'
     # )
 
-    # Comic Style 訓練（註解打開即可用）
+    # Comic Style 訓練（9501 pictures）
      train(
         input_dir=r'C:\Users\USER\Desktop\mlclass\dataset\dataset\Comic Style\train\input',
         label_dir=r'C:\Users\USER\Desktop\mlclass\dataset\dataset\Comic Style\train\label',
@@ -284,7 +284,7 @@ if __name__ == '__main__':
         device='cuda'
     )
 
-    # # Beauty Filter Style 訓練（註解打開即可用）
+    # # Beauty Filter Style 訓練 (2500 pictures)
     # train(
     #    input_dir= r'C:\Users\USER\Desktop\mlclass\dataset\dataset\Beauty Filter Style\train\input',
     #    label_dir= r'C:\Users\USER\Desktop\mlclass\dataset\dataset\Beauty Filter Style\train\label',
@@ -296,4 +296,5 @@ if __name__ == '__main__':
     # )
 
 
-###放著讓他跑 感謝~~~###
+
+
